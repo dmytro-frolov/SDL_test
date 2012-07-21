@@ -2,16 +2,22 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stdbool.h>
 
 void main(void)
 {
 	int height,width;
 =======
+=======
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 
 void main(void)
 {
 	int mx,my,height,width;
+<<<<<<< HEAD
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
+=======
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 
 	width=300;
@@ -45,7 +51,10 @@ void main(void)
  	left=right=false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  	float my,mx;
+=======
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 =======
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
  	mx=width/2;
@@ -53,9 +62,15 @@ void main(void)
 
  	SDL_Event event;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (1){  //sdl loop
 		while ( SDL_PollEvent(&event)){
 			if (event.type == SDL_QUIT){  // X button
+=======
+	while (1){
+		while ( SDL_PollEvent(&event)){
+			if (event.type == SDL_QUIT){
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 =======
 	while (1){
 		while ( SDL_PollEvent(&event)){
@@ -76,7 +91,11 @@ void main(void)
 					left = true;
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				else if (event.key.keysym.sym == SDLK_RIGHT){
+=======
+				else if (event.key.keysym.sym == SDLK_RIGTH){
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 =======
 				else if (event.key.keysym.sym == SDLK_RIGTH){
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
@@ -86,6 +105,7 @@ void main(void)
 				if (event.key.keysym.sym == SDLK_LEFT){
 					left = false;
 				}
+<<<<<<< HEAD
 <<<<<<< HEAD
 				else if (event.key.keysym.sym == SDLK_RIGHT){
 					right = false;
@@ -99,12 +119,17 @@ void main(void)
 		if (right==true && mx<width){
 			mx+=0.5;
 =======
+=======
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 				else if (event.key.keysym.sym == SDLK_RIGTH){
 					right = false;
 				}
 			}
 
 
+<<<<<<< HEAD
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
+=======
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 		}
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -138,6 +163,7 @@ void main(void)
  		glEnd();
 */		
 <<<<<<< HEAD
+<<<<<<< HEAD
 // BAR DRAWING 		//bar width near 40px & height near 20px
  		glColor4ub(0,0,0,255);
  		glBegin(GL_QUADS);
@@ -147,6 +173,8 @@ void main(void)
  		glVertex2f(mx+20,my+10);
  		glVertex2f(mx-20,my+10);
 =======
+=======
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 // BAR DRAWING
  		int bxb,byb,bxe,bye;    //bar x begin, bar x or y end
  		//bar width near 40px & height near 20px
@@ -157,6 +185,9 @@ void main(void)
  		glVertex2f(bxe=m,100);
  		glVertex2f(200,250);
  		glVertex2f(100,250);
+<<<<<<< HEAD
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
+=======
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 
  		glEnd();
@@ -167,7 +198,10 @@ void main(void)
 		glPopMatrix(); // end
 		SDL_GL_SwapBuffers();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		SDL_Delay(1);
+=======
+>>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 =======
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 	}
