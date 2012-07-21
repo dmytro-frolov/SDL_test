@@ -10,3 +10,4 @@ all:
 >>>>>>> edd022e25f93a59bb2bff840aaa38ebf2b7fd31a
 	./test
 
+a
