@@ -7,10 +7,6 @@ void main(void)
 {
 	int height,width;
 
-void main(void)
-{
-	int mx,my,height,width;
-
 	width=300;
 	height=300;
 
@@ -41,6 +37,7 @@ void main(void)
  	bool left,right;
  	left=right=false;
 
+ 	float my,mx;
  	mx=width/2;
  	my=height-20;
 
@@ -48,13 +45,6 @@ void main(void)
 	while (1){  //sdl loop
 		while ( SDL_PollEvent(&event)){
 			if (event.type == SDL_QUIT){  // X button
-	while (1){
-		while ( SDL_PollEvent(&event)){
-			if (event.type == SDL_QUIT){
-
-	while (1){
-		while ( SDL_PollEvent(&event)){
-			if (event.type == SDL_QUIT){
 				return;
 			}
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE){
@@ -69,19 +59,13 @@ void main(void)
 				if (event.key.keysym.sym == SDLK_LEFT){
 					left = true;
 				}
-
 				else if (event.key.keysym.sym == SDLK_RIGHT){
-
-				else if (event.key.keysym.sym == SDLK_RIGTH){
-
-				else if (event.key.keysym.sym == SDLK_RIGTH){
 					right = true;
 				}
 			} else if (event.type == SDL_KEYUP){
 				if (event.key.keysym.sym == SDLK_LEFT){
 					left = false;
 				}
-
 				else if (event.key.keysym.sym == SDLK_RIGHT){
 					right = false;
 				}
@@ -93,13 +77,6 @@ void main(void)
 		}
 		if (right==true && mx<width){
 			mx+=0.5;
-				else if (event.key.keysym.sym == SDLK_RIGTH){
-					right = false;
-				}
-			}
-
-
-
 		}
 		glClear(GL_COLOR_BUFFER_BIT);
 		
@@ -131,7 +108,6 @@ void main(void)
  		glVertex2f(240,240);
  		glEnd();
 */		
-
 // BAR DRAWING 		//bar width near 40px & height near 20px
  		glColor4ub(0,0,0,255);
  		glBegin(GL_QUADS);
@@ -141,17 +117,6 @@ void main(void)
  		glVertex2f(mx+20,my+10);
  		glVertex2f(mx-20,my+10);
 
-// BAR DRAWING
- 		int bxb,byb,bxe,bye;    //bar x begin, bar x or y end
- 		//bar width near 40px & height near 20px
- 		glColor4ub(0,0,0,255);
- 		glBegin(GL_QUADS);
-
- 		glVertex2f(bxb=mx-20,byb=my-10);
- 		glVertex2f(bxe=m,100);
- 		glVertex2f(200,250);
- 		glVertex2f(100,250);
-
  		glEnd();
 
 
@@ -159,7 +124,6 @@ void main(void)
 
 		glPopMatrix(); // end
 		SDL_GL_SwapBuffers();
-
 		SDL_Delay(1);
 	}
 
