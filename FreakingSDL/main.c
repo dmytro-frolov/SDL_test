@@ -3,7 +3,7 @@
 #include <SDL/SDL_opengl.h>
 #include <stdbool.h>
 
-void main(void)
+int main()
 {
 	int height,width;
 
@@ -45,11 +45,11 @@ void main(void)
 	while (1){  //sdl loop
 		while ( SDL_PollEvent(&event)){
 			if (event.type == SDL_QUIT){  // X button
-				return;
+				return 0;
 			}
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE){
 				//printf("%d\n", event.key.keysym.sym );
-				return;
+				return 0;
 			}
 			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_UP){
 				glClearColor(0,0,1,1);
@@ -130,4 +130,5 @@ void main(void)
 	
 
 	SDL_Quit();
+    return 0;
 }
