@@ -3,7 +3,14 @@
 #include <SDL/SDL_opengl.h>
 #include <stdbool.h>
 
-bool collision
+bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
+	if (Ay+Ah < By) return false; // up
+	if (Ax+Aw < Bx) return false; // left
+	if (Ay > By+Bh) return false; // down
+	if (Ax > Bx+Bw) return false; // rigth
+
+	return true;
+}
 
 int main()
 {
@@ -26,7 +33,7 @@ int main()
 
 	SDL_SetVideoMode(width,height,32,SDL_OPENGL);
 
-	glClearColor(1,1,1,1);
+	glClearColor(0,0,0,255);
 	glViewport(0,0,width,height);
 
 	//shader model
@@ -45,7 +52,7 @@ int main()
  	my=height-30;
     
 // ball vars
-    float ballx=100;
+    float ballx=300;
     float bally=30;
     float ballhw=30;
     float vellx=2;
@@ -68,7 +75,9 @@ int main()
 			}
             if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_DOWN){
                 delay-=0.1;
-
+			}
+			if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_SPACE){
+                glClearColor(1,1,1,255);
 			}
 			if (event.type == SDL_KEYDOWN){
 				if (event.key.keysym.sym == SDLK_LEFT){
@@ -90,35 +99,35 @@ int main()
         
 // bar logic
 		if (left==true && mx>0){
-			mx-=0.5;
+			mx-=1.5;
 		}
 		if (right==true && mx<width-120){
-			mx+=0.5;
+			mx+=1.5;
 		}
         
 // ball logic
         ballx+=vellx;
-        bally+=velly;
-        if (bally == my+ballhw && (ballx > mx && ballx < mx+120)){
-            velly=-velly;
-            printf("bingo");
+        bally+=velly;     
+        if (bally > height){
+            printf("%d ",++goal);
+            bally=1;
+            ballx=100;
         }
-        else
-            
-            if (bally > height){
-                printf("%d ",++goal);
-                bally=1;
-                ballx=100;
-            }
-        else
-        if ((ballx < 0) || (ballx > width-ballhw)) {
+
+        if (bally > height){
+        	velly=-velly;
+        }
+        else if ((ballx < 0) || (ballx > width-ballhw)) {
             vellx=-vellx;
         } else
         if ( bally < 0){
             velly=-velly;
         }
 
-        
+       if (collision(ballx,bally,ballhw,ballhw,mx,my,120,20)==true){
+        	velly=-velly;
+        	//bally=0;
+        }
 		glClear(GL_COLOR_BUFFER_BIT); // start renderig
 
 
@@ -127,7 +136,7 @@ int main()
  		glOrtho(0,width,height,0,-1,1); //set da matrix
 	
 // BAR DRAWING 		//bar width near 40px & height near 20px
- 		glColor4ub(0,0,0,255);
+ 		glColor4ub(12,12,120,255);
  		glBegin(GL_QUADS);
 
  		glVertex2f(mx,my);
@@ -147,7 +156,7 @@ int main()
 
 		glPopMatrix(); // end
 		SDL_GL_SwapBuffers();
-		SDL_Delay(1.1);
+		SDL_Delay(4.5);
 	}
 
 	

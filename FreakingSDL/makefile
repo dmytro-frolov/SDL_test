@@ -1,4 +1,4 @@
 all:
-	gcc -o linux/test main.c -lSDLmain -lSDL -lGL 
-	linux/test
+	gcc -o test main.c -lSDLmain -lSDL -lGL 
+	./test
 
