@@ -3,6 +3,8 @@
 #include <SDL/SDL_opengl.h>
 #include <stdbool.h>
 
+#define BRICKS 28
+
 bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
 	if (Ay+Ah < By) return false; // up
 	if (Ax+Aw < Bx) return false; // left
@@ -11,6 +13,10 @@ bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
 
 	return true;
 }
+
+struct brick {
+    float x,y, width, height
+} bricks[BRICKS];
 
 int main()
 {
@@ -33,7 +39,7 @@ int main()
 
 	SDL_SetVideoMode(width,height,32,SDL_OPENGL);
 
-	glClearColor(0,0,0,255);
+	glClearColor(1,1,1,255);
 	glViewport(0,0,width,height);
 
 	//shader model
@@ -46,18 +52,33 @@ int main()
  	
  	bool left,right;
  	left=right=false;
-
+    
+// bar vars
  	float my,mx;
  	mx=width/2;
  	my=height-30;
     
 // ball vars
-    float ballx=300;
-    float bally=30;
+    float ballx=10;
+    float bally=200;
     float ballhw=30;
     float vellx=2;
     float velly=2;
     int goal=0;
+
+// briks initialization
+    int i,x,y;
+    for (i=0,x=8,y=10;i<BRICKS;i++,x+=10+30){
+        if (x>width-31){
+            y+=50;
+            x=8;
+        } 
+        bricks[i].y=y;
+        bricks[i].x=x;
+        bricks[i].width=30;
+        bricks[i].height=30;
+
+    }
     
  	SDL_Event event;
 	while (1){  //sdl loop
@@ -126,13 +147,18 @@ int main()
 
        if (collision(ballx,bally,ballhw,ballhw,mx,my,120,20)==true){
         	velly=-velly;
-        	//bally=0;
         }
+// brick logic 
+        for (i=0;i<BRICKS;i++){
+            if (collision(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height, ballx, bally, ballhw, ballhw)==true){
+            //glClearColor(0, 0, 0, 255);
+            velly=-velly;
+            }
+        }
+        
+        
 		glClear(GL_COLOR_BUFFER_BIT); // start renderig
-
-
 		glPushMatrix(); // Start phase
- 		
  		glOrtho(0,width,height,0,-1,1); //set da matrix
 	
 // BAR DRAWING 		//bar width near 40px & height near 20px
@@ -146,14 +172,24 @@ int main()
 
  		glEnd();
 
-        glColor4ub(128,128, 0,255);
+        glColor4ub(128,128, 0,255);  // ball rendering
         glBegin(GL_QUADS);
         glVertex2f(ballx, bally);
         glVertex2f(ballx+ballhw, bally);
         glVertex2f(ballx+ballhw, bally+ballhw);
         glVertex2f(ballx, bally+ballhw);
         glEnd();
-
+        
+        glColor4ub(0,0,0,255);
+        glBegin(GL_QUADS);
+        for (i=0;i<BRICKS;i++){
+            glVertex2f(bricks[i].x, bricks[i].y);
+            glVertex2f(bricks[i].x+bricks[i].width, bricks[i].y);
+            glVertex2f(bricks[i].x+bricks[i].width, bricks[i].y+bricks[i].height);
+            glVertex2f(bricks[i].x, bricks[i].y+bricks[i].height);
+        }
+        glEnd();
+        
 		glPopMatrix(); // end
 		SDL_GL_SwapBuffers();
 		SDL_Delay(4.5);
