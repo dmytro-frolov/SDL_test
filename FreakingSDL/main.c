@@ -3,7 +3,7 @@
 #include <SDL/SDL_opengl.h>
 #include <stdbool.h>
 
-#define BRICKS 28
+#define BRICKS 36
 
 bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
 	if (Ay+Ah < By) return false; // up
@@ -15,7 +15,8 @@ bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
 }
 
 struct brick {
-    float x,y, width, height
+    float x,y, width, height;
+    bool alive;
 } bricks[BRICKS];
 
 int main()
@@ -67,6 +68,7 @@ int main()
     int goal=0;
 
 // briks initialization
+    char deadcount=0;
     int i,x,y;
     for (i=0,x=8,y=10;i<BRICKS;i++,x+=10+30){
         if (x>width-31){
@@ -77,6 +79,7 @@ int main()
         bricks[i].x=x;
         bricks[i].width=30;
         bricks[i].height=30;
+        bricks[i].alive=true;
 
     }
     
@@ -145,17 +148,22 @@ int main()
             velly=-velly;
         }
 
-       if (collision(ballx,bally,ballhw,ballhw,mx,my,120,20)==true){
+        if (collision(ballx,bally,ballhw,ballhw,mx,my,120,20)==true){
         	velly=-velly;
         }
+
 // brick logic 
         for (i=0;i<BRICKS;i++){
-            if (collision(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height, ballx, bally, ballhw, ballhw)==true){
-            //glClearColor(0, 0, 0, 255);
-            velly=-velly;
+            if ( bricks[i].alive==true && collision(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height, ballx, bally, ballhw, ballhw)==true){
+                velly=-velly;
+                bricks[i].alive=false;
+                deadcount++;
+                if (deadcount==BRICKS) return 0;
+                break;
             }
+            
         }
-        
+        //if(i==BRICKS)return;
         
 		glClear(GL_COLOR_BUFFER_BIT); // start renderig
 		glPushMatrix(); // Start phase
@@ -179,14 +187,17 @@ int main()
         glVertex2f(ballx+ballhw, bally+ballhw);
         glVertex2f(ballx, bally+ballhw);
         glEnd();
-        
+// bricks drawing        
         glColor4ub(0,0,0,255);
         glBegin(GL_QUADS);
         for (i=0;i<BRICKS;i++){
+            if (bricks[i].alive==false) continue;
+            (i%2==0)?glColor4ub(15, 200, 1, 255):glColor4ub(0, 10, 200, 255);
             glVertex2f(bricks[i].x, bricks[i].y);
             glVertex2f(bricks[i].x+bricks[i].width, bricks[i].y);
             glVertex2f(bricks[i].x+bricks[i].width, bricks[i].y+bricks[i].height);
             glVertex2f(bricks[i].x, bricks[i].y+bricks[i].height);
+            
         }
         glEnd();
         
