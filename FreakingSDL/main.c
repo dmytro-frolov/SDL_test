@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+//#include <SDL_image/SDL_image.h>
+//#include <string.h>
+
 #include <stdbool.h>
 
 #define BRICKS 36
 
-bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
+bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh)
+{
 	if (Ay+Ah < By) return false; // up
 	if (Ax+Aw < Bx) return false; // left
 	if (Ay > By+Bh) return false; // down
@@ -14,12 +18,40 @@ bool collision(int Ax,int Ay,int Aw,int Ah,int Bx,int By,int Bw, int Bh){
 	return true;
 }
 
+GLuint imload()
+{
+    SDL_Surface *image;
+    image=IMG_Load("bar.png");
+    
+    SDL_DisplayFormatAlpha(image);
+    
+    unsigned int object(0);
+    
+    glGenTextures(1, &object);
+    
+    glBindTexture(GL_TEXTURE_2D, object);
+    
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+    
+    //Free surface
+    SDL_FreeSurface(image);
+    
+    return object;
+    SDL_BlitSurface(image,0,320,0);
+}
+
 struct brick {
     float x,y, width, height;
     bool alive;
 } bricks[BRICKS];
 
-int main()
+int main(int argc, char* args[])
 {
 	int height,width;
     float delay=1;
@@ -48,6 +80,9 @@ int main()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
+
+    
+    
 	//disable depht checking
 	glDisable(GL_DEPTH_TEST);
  	
@@ -82,7 +117,13 @@ int main()
         bricks[i].alive=true;
 
     }
-    
+ /*   int flags=IMG_INIT_PNG;
+    int initted=IMG_Init(flags);
+    if(initted&flags != flags) {
+        printf("IMG_Init: Failed to init required jpg and png support!\n");
+        printf("IMG_Init: %s\n", IMG_GetError());
+        // handle error
+    */
  	SDL_Event event;
 	while (1){  //sdl loop
 // logic 
@@ -130,7 +171,7 @@ int main()
 		}
         
 // ball logic
-        ballx+=vellx;
+
         bally+=velly;     
         if (bally > height){
             printf("%d ",++goal);
@@ -151,7 +192,9 @@ int main()
         if (collision(ballx,bally,ballhw,ballhw,mx,my,120,20)==true){
         	velly=-velly;
         }
-
+        
+      
+    
 // brick logic 
         for (i=0;i<BRICKS;i++){
             if ( bricks[i].alive==true && collision(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height, ballx, bally, ballhw, ballhw)==true){
@@ -163,13 +206,24 @@ int main()
             }
             
         }
-        //if(i==BRICKS)return;
+        
+        ballx+=vellx;
+        for (i=0;i<BRICKS;i++){
+            if ( bricks[i].alive==true && collision(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height, ballx, bally, ballhw, ballhw)==true){
+                vellx=-vellx;
+                bricks[i].alive=false;
+                deadcount++;
+                if (deadcount==BRICKS) return 0;
+                break;
+            }
+            
+        }
         
 		glClear(GL_COLOR_BUFFER_BIT); // start renderig
 		glPushMatrix(); // Start phase
  		glOrtho(0,width,height,0,-1,1); //set da matrix
 	
-// BAR DRAWING 		//bar width near 40px & height near 20px
+// BAR DRAWING 		//bar width near 120px & height near 20px
  		glColor4ub(12,12,120,255);
  		glBegin(GL_QUADS);
 
@@ -201,6 +255,7 @@ int main()
         }
         glEnd();
         
+
 		glPopMatrix(); // end
 		SDL_GL_SwapBuffers();
 		SDL_Delay(4.5);

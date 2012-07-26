@@ -14,6 +14,7 @@
 		6348282415BAD4870079B4C4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6348282315BAD4870079B4C4 /* OpenGL.framework */; };
 		6348282615BAD48E0079B4C4 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6348282515BAD48E0079B4C4 /* GLUT.framework */; };
 		6348282915BAD5DF0079B4C4 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6348282715BAD5DF0079B4C4 /* SDLMain.m */; };
+		63537D6615C1B3F6007911B3 /* SDL_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63537D6515C1B3F6007911B3 /* SDL_image.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		6348282515BAD48E0079B4C4 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		6348282715BAD5DF0079B4C4 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
 		6348282815BAD5DF0079B4C4 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
+		63537D6515C1B3F6007911B3 /* SDL_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_image.framework; path = Library/Frameworks/SDL_image.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63537D6615C1B3F6007911B3 /* SDL_image.framework in Frameworks */,
 				6348282615BAD48E0079B4C4 /* GLUT.framework in Frameworks */,
 				6348282415BAD4870079B4C4 /* OpenGL.framework in Frameworks */,
 				6348282115BAD4740079B4C4 /* SDL.framework in Frameworks */,
@@ -60,6 +63,7 @@
 		6348280615BAD43F0079B4C4 = {
 			isa = PBXGroup;
 			children = (
+				63537D6515C1B3F6007911B3 /* SDL_image.framework */,
 				6348282515BAD48E0079B4C4 /* GLUT.framework */,
 				6348282315BAD4870079B4C4 /* OpenGL.framework */,
 				6348281F15BAD4740079B4C4 /* SDL.framework */,
@@ -219,6 +223,7 @@
 				6348281C15BAD4400079B4C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
